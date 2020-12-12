@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.android_firebase_todo_app">
-        <activity android:name=".VerTodoActivity"></activity>
+        <activity android:name=".VerTodosActivity"></activity>
         <activity android:name=".CreateTodoActivity" />
         <activity
             android:name=".ScrollingActivity"
