@@ -94,7 +94,8 @@
     <string name="txtStartApp">Iniciar</string>
     <string name="txtNuevoTODO">Ingresar nuevo To Do</string>
     <string name="txtTituloTodo">Título</string>
-    <string name="txtContenidoTodo">Contenido</string>
+    <string name="txtContenidoTodo">¿Qué desea recordar?</string>
     <string name="txtCrearTodo">Crear To Do</string>
     <string name="txtListaToDos">Ver lista</string>
+    <string name="txtFecha">Fecha</string>
 </resources>
