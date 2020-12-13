@@ -18,6 +18,17 @@ public class TODO {
         this.updated = updated;
     }
 
+    @Override
+    public String toString() {
+        return "TODO{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", completed=" + completed +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
+    }
+
     public TODO() {
     }
 
@@ -37,7 +48,7 @@ public class TODO {
         this.content = content;
     }
 
-    public boolean getIsCompleted() {
+    public boolean getCompleted() {
         return completed;
     }
 
