@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/editTodoLayoutDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="0dp">
+
+    <EditText
+        android:id="@+id/editTodoTitleDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/txtTituloTodo"
+        android:ems="10"
+        android:hint="@string/txtTituloTodo"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editTodoContentDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/txtContenidoTodo"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/txtContenidoTodo"
+        android:inputType="textMultiLine" />
+</LinearLayout>
