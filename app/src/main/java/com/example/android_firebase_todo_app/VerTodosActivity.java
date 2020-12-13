@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -175,11 +176,19 @@ public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerA
 
     @Override
     public void handleDelete(DocumentSnapshot snapshot) {
+
+        DocumentReference documentReference = snapshot.getReference();
+        TODO todo = snapshot.toObject(TODO.class);
         snapshot.getReference().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Snackbar.make(recyclerView, "¡TO DO eliminado con éxito!", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(recyclerView, "¡TO DO eliminado con éxito!", Snackbar.LENGTH_LONG).setAction("Deshacer", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            documentReference.set(todo);
+                        }
+                    }).show();
                 } else {
                     Snackbar.make(recyclerView, "¡Hubo un problema al eliminar el TO DO!", Snackbar.LENGTH_LONG).show();
                 }
