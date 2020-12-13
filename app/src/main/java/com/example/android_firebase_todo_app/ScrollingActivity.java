@@ -3,12 +3,16 @@ package com.example.android_firebase_todo_app;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.view.Menu;
@@ -16,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 public class ScrollingActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +33,14 @@ public class ScrollingActivity extends AppCompatActivity {
         toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(v -> {
-            Intent i = new Intent(ScrollingActivity.this, CreateTodoActivity.class);
-            ScrollingActivity.this.startActivity(i);
+            Intent i = new Intent(this, CreateTodoActivity.class);
+            startActivity(i);
         });
     }
+
+
 
     //    @Override
     //    public boolean onCreateOptionsMenu(Menu menu) {
