@@ -9,13 +9,15 @@ public class TODO {
     private boolean completed;
     private Timestamp created;
     private Timestamp updated;
+    private String user;
 
-    public TODO(String title, String content, boolean completed, Timestamp created, Timestamp updated) {
+    public TODO(String title, String content, boolean completed, Timestamp created, Timestamp updated, String user) {
         this.title = title;
         this.content = content;
         this.completed = completed;
         this.created = created;
         this.updated = updated;
+        this.user = user;
     }
 
     @Override
@@ -71,4 +73,9 @@ public class TODO {
     public void setUpdated(Timestamp updated) {
         this.updated = updated;
     }
+
+    public String getUser() { return user; }
+
+    public void setUser(String user) { this.user = user; }
+
 }

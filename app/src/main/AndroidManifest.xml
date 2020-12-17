@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.android_firebase_todo_app">
-        <activity android:name=".VerTodosActivity"></activity>
-        <activity android:name=".CreateTodoActivity" />
+        <activity android:name=".SignUpLoginActivity"/>
+        <activity android:name=".VerTodosActivity" />
+        <activity android:name=".CreateTodoActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
         <activity
             android:name=".ScrollingActivity"
             android:label="@string/app_name"

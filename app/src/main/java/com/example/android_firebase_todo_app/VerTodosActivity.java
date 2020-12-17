@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.InputType;
@@ -25,6 +26,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,7 +35,7 @@ import com.google.firebase.firestore.Query;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerAdapter.ToDoListener {
+public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerAdapter.ToDoListener, FirebaseAuth.AuthStateListener {
 
     private static final String TAG = "Probando";
     ToDoRecyclerAdapter toDoRecyclerAdapter;
@@ -45,23 +48,31 @@ public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerA
 
         recyclerView = findViewById(R.id.listaTodo);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        initRecycleTodoView();
+        initRecycleTodoView(FirebaseAuth.getInstance().getCurrentUser());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(this);
         toDoRecyclerAdapter.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
         toDoRecyclerAdapter.stopListening();
     }
 
-    private void initRecycleTodoView() {
-        Query query = FirebaseFirestore.getInstance().collection("todos").orderBy("created", Query.Direction.DESCENDING);
+    private void initRecycleTodoView(FirebaseUser user) {
+
+        Log.d(TAG, "initRecycleTodoView: CUANTAS VECES");
+        
+        Query query = FirebaseFirestore.getInstance().collection("todos")
+                .whereEqualTo("user", user.getUid())
+                .orderBy("completed", Query.Direction.ASCENDING)
+                .orderBy("created", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<TODO> options = new FirestoreRecyclerOptions.Builder<TODO>().setQuery(query, TODO.class).build();
 
@@ -179,20 +190,31 @@ public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerA
 
         DocumentReference documentReference = snapshot.getReference();
         TODO todo = snapshot.toObject(TODO.class);
-        snapshot.getReference().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Snackbar.make(recyclerView, "¡TO DO eliminado con éxito!", Snackbar.LENGTH_LONG).setAction("Deshacer", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            documentReference.set(todo);
-                        }
-                    }).show();
-                } else {
-                    Snackbar.make(recyclerView, "¡Hubo un problema al eliminar el TO DO!", Snackbar.LENGTH_LONG).show();
-                }
+        snapshot.getReference().delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Snackbar.make(recyclerView, "¡TO DO eliminado con éxito!", Snackbar.LENGTH_LONG).setAction("Deshacer", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        documentReference.set(todo);
+                    }
+                }).show();
+            } else {
+                Snackbar.make(recyclerView, "¡Hubo un problema al eliminar el TO DO!", Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startSignUpLoginActivity();
+            return;
+        }
+    }
+
+    public void startSignUpLoginActivity() {
+        Intent intent = new Intent(this, SignUpLoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
