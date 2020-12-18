@@ -46,9 +46,9 @@ public class SignUpLoginActivity extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
             if (user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp()) {
-                Toast.makeText(this, "Bienvenido", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "¡Bienvenido " + user.getDisplayName() +"!", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Bienvenido nuevamente", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "¡Bienvenido nuevamente "+ user.getDisplayName() +"!", Toast.LENGTH_LONG).show();
             }
 
             Intent intent = new Intent(this, CreateTodoActivity.class);
