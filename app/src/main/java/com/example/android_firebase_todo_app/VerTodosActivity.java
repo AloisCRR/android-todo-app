@@ -66,9 +66,6 @@ public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerA
     }
 
     private void initRecycleTodoView(FirebaseUser user) {
-
-        Log.d(TAG, "initRecycleTodoView: CUANTAS VECES");
-        
         Query query = FirebaseFirestore.getInstance().collection("todos")
                 .whereEqualTo("user", user.getUid())
                 .orderBy("completed", Query.Direction.ASCENDING)
