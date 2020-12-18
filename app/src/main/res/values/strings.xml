@@ -98,4 +98,5 @@
     <string name="txtCrearTodo">Crear To Do</string>
     <string name="txtListaToDos">Ver lista</string>
     <string name="txtFecha">Fecha</string>
+    <string name="txtMostrarCreditos">Mostrar créditos</string>
 </resources>

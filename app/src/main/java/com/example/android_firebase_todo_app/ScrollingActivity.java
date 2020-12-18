@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +22,12 @@ import android.widget.Button;
 
 public class ScrollingActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         setContentView(R.layout.activity_scrolling);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,33 +35,18 @@ public class ScrollingActivity extends AppCompatActivity {
         toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        Button btnShowCredits = findViewById(R.id.btnShowCredits);
 
         fab.setOnClickListener(v -> {
             Intent i = new Intent(this, CreateTodoActivity.class);
             startActivity(i);
         });
+
+        btnShowCredits.setOnClickListener(v -> startShowCreditsActivity());
     }
 
-
-
-    //    @Override
-    //    public boolean onCreateOptionsMenu(Menu menu) {
-    //        // Inflate the menu; this adds items to the action bar if it is present.
-    //        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-    //        return true;
-    //    }
-    //
-    //    @Override
-    //    public boolean onOptionsItemSelected(MenuItem item) {
-    //        // Handle action bar item clicks here. The action bar will
-    //        // automatically handle clicks on the Home/Up button, so long
-    //        // as you specify a parent activity in AndroidManifest.xml.
-    //        int id = item.getItemId();
-    //
-    //        //noinspection SimplifiableIfStatement
-    //        if (id == R.id.action_settings) {
-    //            return true;
-    //        }
-    //        return super.onOptionsItemSelected(item);
-    //    }
+    public void startShowCreditsActivity() {
+        Intent intent = new Intent(this, ShowCreditsActivity.class);
+        startActivity(intent);
+    }
 }
