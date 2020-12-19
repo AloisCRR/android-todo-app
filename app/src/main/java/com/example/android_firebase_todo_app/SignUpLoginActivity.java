@@ -33,9 +33,7 @@ public class SignUpLoginActivity extends AppCompatActivity {
             finish();
         }
 
-        View view = findViewById(R.id.layoutSignUpLogin);
-
-        handleSignUpLogin(view);
+        handleSignUpLogin();
     }
 
     @Override
@@ -64,7 +62,7 @@ public class SignUpLoginActivity extends AppCompatActivity {
         }
     }
 
-    public void handleSignUpLogin(View v) {
+    public void handleSignUpLogin() {
         List<AuthUI.IdpConfig> provider = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build()
