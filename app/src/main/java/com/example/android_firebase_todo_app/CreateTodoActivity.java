@@ -50,23 +50,20 @@ public class CreateTodoActivity extends AppCompatActivity implements FirebaseAut
             return;
         }
 
-        txtTitle.onEditorAction(EditorInfo.IME_ACTION_DONE);
-        txtContent.onEditorAction(EditorInfo.IME_ACTION_DONE);
+//        txtTitle.onEditorAction(EditorInfo.IME_ACTION_DONE);
+//        txtContent.onEditorAction(EditorInfo.IME_ACTION_DONE);
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         TODO todoDocument = new TODO(txtTitle.getText().toString(), txtContent.getText().toString(), false, Timestamp.now(), Timestamp.now(), user);
 
-        firestore.collection("todos").add(todoDocument).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                if (task.isSuccessful()) {
-                    Snackbar.make(v, "¡TO DO creado con éxito!", Snackbar.LENGTH_LONG).show();
-                    txtTitle.getText().clear();
-                    txtContent.getText().clear();
-                    txtTitle.requestFocus();
-                } else {
-                    Snackbar.make(v, "¡Hubo un problema al crear el TO DO!", Snackbar.LENGTH_LONG).show();
-                }
+        firestore.collection("todos").add(todoDocument).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Snackbar.make(v, "¡TO DO creado con éxito!", Snackbar.LENGTH_LONG).show();
+                txtTitle.getText().clear();
+                txtContent.getText().clear();
+                txtTitle.requestFocus();
+            } else {
+                Snackbar.make(v, "¡Hubo un problema al crear el TO DO!", Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -122,9 +119,8 @@ public class CreateTodoActivity extends AppCompatActivity implements FirebaseAut
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                AuthUI.getInstance().signOut(this);
+        if (item.getItemId() == R.id.action_logout) {
+            AuthUI.getInstance().signOut(this);
         }
         return true;
     }

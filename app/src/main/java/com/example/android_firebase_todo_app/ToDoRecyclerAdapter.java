@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class ToDoRecyclerAdapter extends FirestoreRecyclerAdapter<TODO, ToDoRecyclerAdapter.ToDoViewHolder> {
 
-    private static final String TAG = "PROBANDO";
+//    private static final String TAG = "PROBANDO";
     ToDoListener toDoListener;
 
     public ToDoRecyclerAdapter(@NonNull FirestoreRecyclerOptions<TODO> options, ToDoListener toDoListener) {
@@ -61,14 +61,11 @@ public class ToDoRecyclerAdapter extends FirestoreRecyclerAdapter<TODO, ToDoRecy
             checkBox = itemView.findViewById(R.id.todoListCheckbox);
             fechaTextView = itemView.findViewById(R.id.todoListFecha);
 
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
-                    TODO todo = getItem(getAdapterPosition());
-                    if (todo.getCompleted() != isChecked) {
-                        toDoListener.handleCompleted(isChecked, snapshot);
-                    }
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                DocumentSnapshot snapshot = getSnapshots().getSnapshot(getAdapterPosition());
+                TODO todo = getItem(getAdapterPosition());
+                if (todo.getCompleted() != isChecked) {
+                    toDoListener.handleCompleted(isChecked, snapshot);
                 }
             });
         }

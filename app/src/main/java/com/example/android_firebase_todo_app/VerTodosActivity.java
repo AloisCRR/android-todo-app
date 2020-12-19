@@ -37,7 +37,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerAdapter.ToDoListener, FirebaseAuth.AuthStateListener {
 
-    private static final String TAG = "Probando";
+//    private static final String TAG = "Probando";
     ToDoRecyclerAdapter toDoRecyclerAdapter;
     RecyclerView recyclerView;
 
@@ -98,7 +98,6 @@ public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerA
             if (direction == ItemTouchHelper.RIGHT) {
                 toDoViewHolder.editTodo();
             }
-
         }
 
         @Override
@@ -150,24 +149,18 @@ public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerA
         contentEdit.setText(todo.getContent());
         contentEdit.setSelection(todo.getContent().length());
 
-        builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setPositiveButton("Guardar", (dialog, which) -> {
 
-                todo.setTitle(titleEdit.getText().toString());
-                todo.setContent(contentEdit.getText().toString());
-                todo.setUpdated(Timestamp.now());
-                snapshot.getReference().set(todo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Snackbar.make(recyclerView, "¡TO DO editado con éxito!", Snackbar.LENGTH_LONG).show();
-                        } else {
-                            Snackbar.make(recyclerView, "¡Hubo un problema al editar el TO DO!", Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }
+            todo.setTitle(titleEdit.getText().toString());
+            todo.setContent(contentEdit.getText().toString());
+            todo.setUpdated(Timestamp.now());
+            snapshot.getReference().set(todo).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Snackbar.make(recyclerView, "¡TO DO editado con éxito!", Snackbar.LENGTH_LONG).show();
+                } else {
+                    Snackbar.make(recyclerView, "¡Hubo un problema al editar el TO DO!", Snackbar.LENGTH_LONG).show();
+                }
+            });
         }).setNegativeButton("Cancelar", null);
 
         builder.show();
