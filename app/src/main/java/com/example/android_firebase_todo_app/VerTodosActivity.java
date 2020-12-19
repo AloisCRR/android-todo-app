@@ -171,15 +171,6 @@ public class VerTodosActivity extends AppCompatActivity implements ToDoRecyclerA
         }).setNegativeButton("Cancelar", null);
 
         builder.show();
-
-//        new AlertDialog.Builder(this).setView(R.id.editTodoLayoutDialog)
-//                .setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Snackbar.make(recyclerView, "¡Guardando...!", Snackbar.LENGTH_LONG).show();
-//                    }
-//                }).setNegativeButton("Cancelar", null).show();
-
     }
 
     @Override
